@@ -1,0 +1,158 @@
+:root {
+  --bg: #f5f2e9;
+  --text: #0f0f0f;
+  --disc-empty: #f0ede3;
+  --disc-inner: #e4ddd0;
+  --accent: #dd4d3c;
+  --accent-shadow: rgba(221, 77, 60, 0.28);
+  --panel: rgba(255, 251, 245, 0.75);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 45%, #fffbf5 0%, var(--bg) 65%);
+  color: var(--text);
+  font-family: "Space Grotesk", sans-serif;
+}
+
+#end-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 350ms ease;
+  z-index: 8;
+}
+
+#end-canvas.active {
+  opacity: 1;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.immersive-timer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.timer-disc {
+  width: 180vmax;
+  height: 180vmax;
+  border-radius: 50%;
+  position: relative;
+  background: conic-gradient(var(--accent) 0deg, var(--disc-empty) 0deg 360deg);
+  box-shadow:
+    0 30px 100px var(--accent-shadow),
+    inset 0 -30px 80px rgba(0, 0, 0, 0.1);
+  display: grid;
+  place-items: center;
+}
+
+.timer-hole {
+  position: absolute;
+  width: 32vmin;
+  height: 32vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fffaf0 0%, var(--disc-inner) 72%);
+  z-index: 1;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.18);
+}
+
+.countdown {
+  position: relative;
+  z-index: 2;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(3rem, 10vmin, 9rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #111;
+  text-shadow: 0 4px 12px rgba(255, 255, 255, 0.5);
+}
+
+.controls {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: end;
+  gap: 0.65rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  background: var(--panel);
+}
+
+.minutes-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.minutes-input input,
+button {
+  font: inherit;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #fff;
+  color: var(--text);
+  padding: 0.55rem 0.65rem;
+}
+
+.minutes-input input {
+  width: 5rem;
+}
+
+button {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover {
+  background: #f8f2e4;
+}
+
+@media (max-width: 640px) {
+  .timer-disc {
+    width: 220vmax;
+    height: 220vmax;
+  }
+
+  .timer-hole {
+    width: 44vmin;
+    height: 44vmin;
+  }
+
+  .controls {
+    width: calc(100vw - 1rem);
+    left: 0.5rem;
+    transform: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    bottom: 0.5rem;
+  }
+}
