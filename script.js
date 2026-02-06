@@ -24,7 +24,7 @@ function formatTime(ms) {
 function updateVisuals() {
   const ratio = totalMs > 0 ? remainingMs / totalMs : 0;
   const angle = Math.max(0, Math.min(360, ratio * 360));
-  discEl.style.background = `conic-gradient(var(--accent) ${angle}deg, var(--disc-empty) ${angle}deg 360deg)`;
+  discEl.style.setProperty("--angle", `${angle}deg`);
   countdownEl.textContent = formatTime(remainingMs);
 }
 

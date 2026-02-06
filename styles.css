@@ -1,11 +1,10 @@
 :root {
-  --bg: #f5f2e9;
-  --text: #0f0f0f;
-  --disc-empty: #f0ede3;
-  --disc-inner: #e4ddd0;
-  --accent: #dd4d3c;
-  --accent-shadow: rgba(221, 77, 60, 0.28);
-  --panel: rgba(255, 251, 245, 0.75);
+  --bg: #f7f7f7;
+  --text: #121212;
+  --disc-face: #ffffff;
+  --disc-edge: #cfd2d6;
+  --accent: #df3b32;
+  --panel: rgba(255, 255, 255, 0.9);
 }
 
 * {
@@ -21,9 +20,9 @@ body {
 
 body {
   overflow: hidden;
-  background: radial-gradient(circle at 50% 45%, #fffbf5 0%, var(--bg) 65%);
+  background: radial-gradient(circle at 50% 40%, #ffffff 0%, var(--bg) 62%);
   color: var(--text);
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
 
 #end-canvas {
@@ -55,52 +54,86 @@ body {
 }
 
 .timer-disc {
-  width: 180vmax;
-  height: 180vmax;
+  --angle: 360deg;
+  width: 220vmax;
+  height: 220vmax;
   border-radius: 50%;
   position: relative;
-  background: conic-gradient(var(--accent) 0deg, var(--disc-empty) 0deg 360deg);
-  box-shadow:
-    0 30px 100px var(--accent-shadow),
-    inset 0 -30px 80px rgba(0, 0, 0, 0.1);
+  background: var(--disc-face);
+  border: 2px solid var(--disc-edge);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   display: grid;
   place-items: center;
 }
 
-.timer-hole {
+.timer-disc::before {
+  content: "";
   position: absolute;
-  width: 32vmin;
-  height: 32vmin;
+  inset: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #fffaf0 0%, var(--disc-inner) 72%);
-  z-index: 1;
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.18);
+  background: conic-gradient(
+    from -90deg,
+    var(--accent) 0deg,
+    var(--accent) var(--angle),
+    transparent var(--angle),
+    transparent 360deg
+  );
+}
+
+.timer-disc::after {
+  content: "";
+  position: absolute;
+  inset: 1.2vmax;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      from -90deg,
+      #212121 0deg 0.6deg,
+      transparent 0.6deg 6deg
+    ),
+    repeating-conic-gradient(
+      from -90deg,
+      #111111 0deg 1.4deg,
+      transparent 1.4deg 30deg
+    );
+  mask: radial-gradient(circle, transparent 0 calc(100% - 24px), #000 calc(100% - 24px) 100%);
+  opacity: 0.85;
+}
+
+.dial-center {
+  position: relative;
+  z-index: 4;
+  width: min(43vmin, 390px);
+  height: min(43vmin, 390px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #1d1d1d;
+  display: grid;
+  place-items: center;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.18),
+    inset 0 0 0 10px rgba(255, 255, 255, 0.65);
 }
 
 .countdown {
-  position: relative;
-  z-index: 2;
-  font-family: "Orbitron", sans-serif;
-  font-size: clamp(3rem, 10vmin, 9rem);
+  font-family: "Space Mono", monospace;
+  font-size: clamp(2.4rem, 8.2vmin, 7rem);
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #111;
-  text-shadow: 0 4px 12px rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.03em;
+  color: #101010;
 }
 
 .controls {
   position: fixed;
-  left: 50%;
-  bottom: 1.5rem;
-  transform: translateX(-50%);
+  right: 1rem;
+  top: 1rem;
   z-index: 10;
   display: flex;
   align-items: end;
-  gap: 0.65rem;
-  padding: 0.8rem 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  backdrop-filter: blur(10px);
+  gap: 0.5rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
   background: var(--panel);
 }
 
@@ -108,7 +141,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -117,10 +150,10 @@ body {
 button {
   font: inherit;
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(0, 0, 0, 0.28);
   background: #fff;
   color: var(--text);
-  padding: 0.55rem 0.65rem;
+  padding: 0.45rem 0.6rem;
 }
 
 .minutes-input input {
@@ -133,26 +166,26 @@ button {
 }
 
 button:hover {
-  background: #f8f2e4;
+  background: #f0f3f7;
 }
 
 @media (max-width: 640px) {
   .timer-disc {
-    width: 220vmax;
-    height: 220vmax;
+    width: 260vmax;
+    height: 260vmax;
   }
 
-  .timer-hole {
-    width: 44vmin;
-    height: 44vmin;
+  .dial-center {
+    width: min(57vmin, 330px);
+    height: min(57vmin, 330px);
   }
 
   .controls {
-    width: calc(100vw - 1rem);
+    width: auto;
+    right: 0.5rem;
     left: 0.5rem;
-    transform: none;
     justify-content: center;
     flex-wrap: wrap;
-    bottom: 0.5rem;
+    top: 0.5rem;
   }
 }
