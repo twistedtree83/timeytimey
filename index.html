@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=IBM+Plex+Mono:wght@600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -18,6 +18,20 @@
     <main class="app">
       <section class="immersive-timer" aria-label="Visual countdown timer">
         <div class="timer-disc" id="timer-disc">
+          <div class="marker-ring" aria-hidden="true">
+            <span style="--i: 0">0</span>
+            <span style="--i: 1">5</span>
+            <span style="--i: 2">10</span>
+            <span style="--i: 3">15</span>
+            <span style="--i: 4">20</span>
+            <span style="--i: 5">25</span>
+            <span style="--i: 6">30</span>
+            <span style="--i: 7">35</span>
+            <span style="--i: 8">40</span>
+            <span style="--i: 9">45</span>
+            <span style="--i: 10">50</span>
+            <span style="--i: 11">55</span>
+          </div>
           <div class="dial-center">
             <div class="countdown" id="countdown" aria-live="polite">10:00</div>
           </div>
@@ -27,7 +41,7 @@
       <section class="controls" aria-label="Timer controls">
         <label class="minutes-input" for="minutes">
           <span>Minutes</span>
-          <input id="minutes" type="number" min="1" max="180" value="10" />
+          <input id="minutes" type="number" min="1" max="180" value="60" />
         </label>
         <button id="start">Start</button>
         <button id="pause">Pause</button>

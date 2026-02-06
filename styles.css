@@ -1,10 +1,11 @@
 :root {
-  --bg: #f7f7f7;
-  --text: #121212;
-  --disc-face: #ffffff;
-  --disc-edge: #cfd2d6;
-  --accent: #df3b32;
-  --panel: rgba(255, 255, 255, 0.9);
+  --bg: #eceff3;
+  --text: #121417;
+  --face: #ffffff;
+  --face-border: #b8bfc9;
+  --tick: #3c4148;
+  --accent: #df3d33;
+  --panel: rgba(255, 255, 255, 0.92);
 }
 
 * {
@@ -20,7 +21,8 @@ body {
 
 body {
   overflow: hidden;
-  background: radial-gradient(circle at 50% 40%, #ffffff 0%, var(--bg) 62%);
+  background:
+    radial-gradient(circle at 50% 38%, #ffffff 0%, #f5f7fa 45%, var(--bg) 100%);
   color: var(--text);
   font-family: "DM Sans", sans-serif;
 }
@@ -33,7 +35,7 @@ body {
   pointer-events: none;
   opacity: 0;
   transition: opacity 350ms ease;
-  z-index: 8;
+  z-index: 20;
 }
 
 #end-canvas.active {
@@ -55,13 +57,22 @@ body {
 
 .timer-disc {
   --angle: 360deg;
-  width: 220vmax;
-  height: 220vmax;
+  width: 190vmax;
+  height: 190vmax;
   border-radius: 50%;
   position: relative;
-  background: var(--disc-face);
-  border: 2px solid var(--disc-edge);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 10px solid var(--face-border);
+  background:
+    conic-gradient(
+      from -90deg,
+      var(--accent) 0deg,
+      var(--accent) var(--angle),
+      var(--face) var(--angle),
+      var(--face) 360deg
+    );
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.2),
+    inset 0 2px 8px rgba(255, 255, 255, 0.7);
   display: grid;
   place-items: center;
 }
@@ -69,69 +80,80 @@ body {
 .timer-disc::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: conic-gradient(
-    from -90deg,
-    var(--accent) 0deg,
-    var(--accent) var(--angle),
-    transparent var(--angle),
-    transparent 360deg
-  );
-}
-
-.timer-disc::after {
-  content: "";
-  position: absolute;
-  inset: 1.2vmax;
+  inset: 1.1vmax;
   border-radius: 50%;
   background:
     repeating-conic-gradient(
       from -90deg,
-      #212121 0deg 0.6deg,
-      transparent 0.6deg 6deg
+      var(--tick) 0deg 0.45deg,
+      transparent 0.45deg 6deg
     ),
     repeating-conic-gradient(
       from -90deg,
-      #111111 0deg 1.4deg,
-      transparent 1.4deg 30deg
+      #1d2024 0deg 1.1deg,
+      transparent 1.1deg 30deg
     );
-  mask: radial-gradient(circle, transparent 0 calc(100% - 24px), #000 calc(100% - 24px) 100%);
-  opacity: 0.85;
+  mask: radial-gradient(circle, transparent 0 calc(100% - 20px), #000 calc(100% - 20px) 100%);
+  opacity: 0.75;
+}
+
+.marker-ring {
+  position: absolute;
+  width: min(62vmin, 620px);
+  height: min(62vmin, 620px);
+  z-index: 3;
+}
+
+.marker-ring span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: clamp(0.95rem, 2.3vmin, 1.45rem);
+  font-weight: 700;
+  color: #181b1f;
+  transform:
+    translate(-50%, -50%)
+    rotate(calc(var(--i) * 30deg))
+    translateY(calc(-1 * min(29vmin, 290px)))
+    rotate(calc(var(--i) * -30deg));
 }
 
 .dial-center {
   position: relative;
-  z-index: 4;
-  width: min(43vmin, 390px);
-  height: min(43vmin, 390px);
+  z-index: 5;
+  width: min(34vmin, 340px);
+  height: min(34vmin, 340px);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.95);
-  border: 3px solid #1d1d1d;
+  background:
+    radial-gradient(circle at 50% 35%, #30343a 0%, #0e1013 74%);
+  border: 6px solid #e2e6ec;
   display: grid;
   place-items: center;
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.18),
-    inset 0 0 0 10px rgba(255, 255, 255, 0.65);
+    0 12px 26px rgba(0, 0, 0, 0.32),
+    inset 0 -12px 22px rgba(0, 0, 0, 0.3),
+    inset 0 10px 20px rgba(255, 255, 255, 0.08);
 }
 
 .countdown {
-  font-family: "Space Mono", monospace;
-  font-size: clamp(2.4rem, 8.2vmin, 7rem);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(2.2rem, 7.4vmin, 6.6rem);
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #101010;
+  color: #f5f7fb;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.28);
 }
 
 .controls {
   position: fixed;
-  right: 1rem;
-  top: 1rem;
-  z-index: 10;
+  left: 50%;
+  bottom: 0.9rem;
+  transform: translateX(-50%);
+  z-index: 25;
   display: flex;
   align-items: end;
-  gap: 0.5rem;
-  padding: 0.65rem;
+  gap: 0.45rem;
+  padding: 0.62rem 0.68rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   background: var(--panel);
@@ -140,7 +162,7 @@ body {
 .minutes-input {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -149,43 +171,56 @@ body {
 .minutes-input input,
 button {
   font: inherit;
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.28);
   background: #fff;
   color: var(--text);
-  padding: 0.45rem 0.6rem;
+  padding: 0.44rem 0.58rem;
 }
 
 .minutes-input input {
-  width: 5rem;
+  width: 4.9rem;
 }
 
 button {
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 button:hover {
-  background: #f0f3f7;
+  background: #eef2f6;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 720px) {
   .timer-disc {
-    width: 260vmax;
-    height: 260vmax;
+    width: 235vmax;
+    height: 235vmax;
+  }
+
+  .marker-ring {
+    width: min(72vmin, 460px);
+    height: min(72vmin, 460px);
+  }
+
+  .marker-ring span {
+    transform:
+      translate(-50%, -50%)
+      rotate(calc(var(--i) * 30deg))
+      translateY(calc(-1 * min(34vmin, 220px)))
+      rotate(calc(var(--i) * -30deg));
   }
 
   .dial-center {
-    width: min(57vmin, 330px);
-    height: min(57vmin, 330px);
+    width: min(46vmin, 290px);
+    height: min(46vmin, 290px);
   }
 
   .controls {
-    width: auto;
-    right: 0.5rem;
-    left: 0.5rem;
+    width: calc(100vw - 0.8rem);
+    left: 0.4rem;
+    transform: none;
     justify-content: center;
     flex-wrap: wrap;
-    top: 0.5rem;
+    bottom: 0.4rem;
   }
 }
